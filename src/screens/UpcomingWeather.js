@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, SafeAreaView, StyleSheet, FlatList, StatusBar, ImageBackground } from "react-native";
-import { Feather } from '@expo/vector-icons';
+import ListItem from "../components/ListItem";
 
 const Data = [
    {
@@ -157,29 +157,17 @@ const Data = [
       "dt_txt": "2022-09-04 12:00:00"
     }
 ]
-  
-const Item = (props) => {
-  const {dt_txt, min, max, condition } = props;
-
-  return (
-    <View style={styles.item}>
-      <Feather name={'sun'} size={50} color={'white'} />
-      <Text style={styles.date}>{dt_txt}</Text>
-      <Text style={styles.temp}>{min}</Text>
-      <Text style={styles.temp}>{max}</Text>
-    </View>
-  )
-}
 const UpcomingWeather = () => {
   const renderItem = (({ item }) => (
-    <Item condition={item.weather[0].main} dt_txt={item.dt_txt} min={item.main.temp_min} max={item.main.temp_max} />
-  ))
+    <ListItem condition={item.weather[0].main} dt_txt={item.dt_txt} min={item.main.temp_min} max={item.main.temp_max} />
+  ));
+  const {wrapper, image, container} = styles;
   return (
-    <SafeAreaView style={styles.wrapper}>
+    <SafeAreaView style={wrapper}>
       <ImageBackground
         source={require('../../assets/upcoming-background.jpg')}
-        style={styles.image}>
-        <View style={styles.container}>
+        style={image}>
+        <View style={container}>
           <Text>UpcomingWeather</Text>
           <FlatList
             data={Data}
@@ -202,25 +190,6 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
     justifyContent: "center",
     alignItems: 'center',
-  },
-  item: {
-    padding: 20,
-    borderColor: 'black',
-    borderWidth: 3,
-    backgroundColor: "pink",
-    marginVertical: 8,
-    marginHorizontal: 16,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center'
-  },
-  temp: {
-    fontSize: 20,
-    color: "white"
-  },
-  date: {
-    fontSize: 15,
-    color: "white"
   },
   image: {
     flex: 1,
